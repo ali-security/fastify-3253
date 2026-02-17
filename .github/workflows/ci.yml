@@ -3,11 +3,11 @@ name: ci
 on:
   push:
     paths-ignore:
-      - 'docs/**'
+      - docs/**
       - '*.md'
   pull_request:
     paths-ignore:
-      - 'docs/**'
+      - docs/**
       - '*.md'
 
 jobs:
@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         node-version: [10, 12, 14]
-        os: [macos-12, ubuntu-20.04, windows-latest]
+        os: [macos-14, ubuntu-22.04, windows-2022]
 
     steps:
       - uses: actions/checkout@v2.3.4
@@ -55,11 +55,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{matrix.os}}-${{matrix.node-version}}
-          path: "fastify-3.17.0-sp3.tgz"
+          path: fastify-3.17.0-sp3.tgz
 
   coverage:
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Coveralls Finished
         uses: coverallsapp/github-action@master
@@ -69,7 +69,7 @@ jobs:
 
   automerge:
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: fastify/github-action-merge-dependabot@v2.0.0
         with:
